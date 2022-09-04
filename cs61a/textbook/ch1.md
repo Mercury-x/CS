@@ -10,6 +10,13 @@
 
 > When executing an assignment statement, Python evaluates the expression to the right of = before changing the binding to the name on the left. Therefore, one can refer to a name in right-side expression, even if it is the name to be bound by the assignment statement.
 
+- an enviroment is a sequence of frames.
+  - the global frame alone
+  - A local, then the global frame
+- Every expression is evaluated in the context of an environment
+  - A name evaluates to the value bound to that name in the earliest frame of the current environment in which that name is found
+  - I think it likes the js exec context
+
 ```py
 # so the expression like:
 x = y = z = 1
@@ -29,6 +36,8 @@ x = y = z = 1
 
 > Non-pure functions. In addition to returning a value, applying a non-pure function can generate side effects, which make some change to the state of the interpreter or computer.
 
+a side effect isn't a value; it's anything that happens as a consequence of calling a function
+
 so Non-pure functions can not be used effectivefly in nested expressions.
 
 > In computer science, an operation, function or expression is said to have a side effect if it modifies some state variable value(s) outside its local environment, which is to say if it has any observable effect other than its primary effect of returning a value to the invoker of the operation.
@@ -40,6 +49,8 @@ so Non-pure functions can not be used effectivefly in nested expressions.
 > An import statement binds a name to a built-in function. A def statement binds a name to a user-defined function created by the definition.
 
 > The name appearing in the function is called the intrinsic name. The name in a frame is a bound name. There is a difference between the two: different names may refer to the same function, but that function itself has only one intrinsic name.
+
+![](images/statements.png)
 
 ```py
 # if a function is not defined in another function, it counldn't get its parent enviroment value
