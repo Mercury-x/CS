@@ -107,14 +107,17 @@ def with_if_function():
 
 def cond():
     "*** YOUR CODE HERE ***"
+    return False
 
 
 def true_func():
     "*** YOUR CODE HERE ***"
+    return print(42)
 
 
 def false_func():
     "*** YOUR CODE HERE ***"
+    return print(47)
 
 
 def hailstone(n):
@@ -133,3 +136,15 @@ def hailstone(n):
     7
     """
     "*** YOUR CODE HERE ***"
+    count = 0  # the exec times of the loop
+    while 1:
+        count += 1
+        print(int(n))
+        if n == 1:
+            break
+        if n % 2 == 0:
+            n = n / 2
+        else:
+            n = n * 3 + 1
+
+    return count
