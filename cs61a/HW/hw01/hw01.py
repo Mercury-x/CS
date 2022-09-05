@@ -8,10 +8,10 @@ def a_plus_abs_b(a, b):
     5
     >>> a_plus_abs_b(2, -3)
     5
-    >>> # a check that you didn't change the return statement!
-    >>> import inspect, re
-    >>> re.findall(r'^\s*(return .*)', inspect.getsource(a_plus_abs_b), re.M)
-    ['return f(a, b)']
+    >>> a_plus_abs_b(-1, 4)
+    3
+    >>> a_plus_abs_b(-1, -4)
+    3
     """
     if b < 0:
         f = sub
@@ -20,9 +20,20 @@ def a_plus_abs_b(a, b):
     return f(a, b)
 
 
-def two_of_three(x, y, z):
-    """Return a*a + b*b, where a and b are the two smallest members of the
-    positive numbers x, y, and z.
+def a_plus_abs_b_syntax_check():
+    """Check that you didn't change the return statement of a_plus_abs_b.
+
+    >>> # You aren't expected to understand the code of this test.
+    >>> import inspect, re
+    >>> re.findall(r'^\s*(return .*)', inspect.getsource(a_plus_abs_b), re.M)
+    ['return f(a, b)']
+    """
+    # You don't need to edit this function. It's just here to check your work.
+
+
+def two_of_three(i, j, k):
+    """Return m*m + n*n, where m and n are the two smallest members of the
+    positive numbers i, j, and k.
 
     >>> two_of_three(1, 2, 3)
     5
@@ -32,13 +43,19 @@ def two_of_three(x, y, z):
     68
     >>> two_of_three(5, 5, 5)
     50
-    >>> # check that your code consists of nothing but an expression (this docstring)
-    >>> # a return statement
+    """
+    return i * i + j * j + k * k - max(i, j, k) * max(i, j, k)
+
+
+def two_of_three_syntax_check():
+    """Check that your two_of_three code consists of nothing but a return statement.
+
+    >>> # You aren't expected to understand the code of this test.
     >>> import inspect, ast
     >>> [type(x).__name__ for x in ast.parse(inspect.getsource(two_of_three)).body[0].body]
     ['Expr', 'Return']
     """
-    return x*x + y*y + z*z - max(x, y, z) * max(x, y, z)
+    # You don't need to edit this function. It's just here to check your work.
 
 
 def largest_factor(n):
@@ -53,71 +70,13 @@ def largest_factor(n):
     """
     "*** YOUR CODE HERE ***"
     max = 1
-    i = 0
-    while(i < n):
-        i += 1
-        if n % i == 0 and i != n:
-            max = i
+    factor = 1
+    while factor < n and factor != n:
+        if n % factor == 0:
+            max = factor
+        factor += 1
 
     return max
-
-
-def if_function(condition, true_result, false_result):
-    """Return true_result if condition is a true value, and
-    false_result otherwise.
-
-    >>> if_function(True, 2, 3)
-    2
-    >>> if_function(False, 2, 3)
-    3
-    >>> if_function(3==2, 3+2, 3-2)
-    1
-    >>> if_function(3>2, 3+2, 3-2)
-    5
-    """
-    if condition:
-        return true_result
-    else:
-        return false_result
-
-
-def with_if_statement():
-    """
-    >>> result = with_if_statement()
-    47
-    >>> print(result)
-    None
-    """
-    if cond():
-        return true_func()
-    else:
-        return false_func()
-
-
-def with_if_function():
-    """
-    >>> result = with_if_function()
-    42
-    47
-    >>> print(result)
-    None
-    """
-    return if_function(cond(), true_func(), false_func())
-
-
-def cond():
-    "*** YOUR CODE HERE ***"
-    return False
-
-
-def true_func():
-    "*** YOUR CODE HERE ***"
-    return print(42)
-
-
-def false_func():
-    "*** YOUR CODE HERE ***"
-    return print(47)
 
 
 def hailstone(n):
@@ -134,17 +93,19 @@ def hailstone(n):
     1
     >>> a
     7
+    >>> b = hailstone(1)
+    1
+    >>> b
+    1
     """
     "*** YOUR CODE HERE ***"
-    count = 0  # the exec times of the loop
+    count = 0
     while 1:
+        print(n)
         count += 1
-        print(int(n))
         if n == 1:
-            break
+            return count
         if n % 2 == 0:
-            n = n / 2
+            n //= 2
         else:
             n = n * 3 + 1
-
-    return count
