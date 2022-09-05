@@ -1,1 +1,6 @@
 __pycache__/
+.dat
+.dir
+.bak
+.ok_history
+.ok_messages
