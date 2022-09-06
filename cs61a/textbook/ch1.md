@@ -140,3 +140,39 @@ currying(1)(2)
 ```
 
 ### 1.6.7 lambda expression
+
+```py
+>>> s = lambda x: x * x
+>>> s
+<function <lambda> at 0xf3f490>
+>>> s(12)
+144
+```
+
+### 1.6.8 first-class functions
+~~~~
+They may be bound to names.
+They may be passed as arguments to functions.
+They may be returned as the results of functions.
+They may be included in data structures.
+~~~~
+
+
+### 1.6.9 function decorator
+
+```py
+def trace(fn):
+    def wrapper(x):
+        print(fn, '(', x, ')')
+        return fn(x)
+    
+    return wrapper
+
+@trace    
+def square(x):
+    return x * x
+
+result = square(12)
+print(result)
+```
+>In this example, A higher-order function trace is defined, which returns a function that precedes a call to its argument with a print statement that outputs the argument. The def statement for triple has an annotation, @trace, which affects the execution rule for def. As usual, the function triple is created. However, the name triple is not bound to this function. Instead, the name triple is bound to the returned function value of calling trace on the newly defined triple function.
