@@ -95,6 +95,24 @@ NameError: name 'b' is not defined
 
 > The key to effective testing is to write (and run) tests immediately after implementing new functions. It is even good practice to write some tests before you implement, in order to have some example inputs and outputs in your mind. A test that applies a single function is called a unit test. Exhaustive unit testing is a hallmark of good program design.
 
+## 1.5 control
+
+My understanding about Boolean value. In the world of programing language, they have two types of Boolean value, one is False, and the other is True. In my understanding, I think each value correspond to a Boolean Value, whatever it's True or False.So, when we use short-circuiting, we will first check the corresponding boolean value, depends on different it's boolean value, it will return the corresponding expression.
+
+
+**Boolean operators return expression, not boolean value!**
+
+```py
+>>> False and 0
+>>> False
+# python will first check the False, and it's correspond boolean value is false, so the 'and' operator would end, and return the express
+>>> True and 0
+>>> 0
+# when the first arg of the 'and' operator is true, the 'and' is totally depends on the second arg.So, it will return the second arg's expression
+# and, because we are not executing boolean operator in Boolean Context, python don't have to change its value to boolean.
+>>> 'azoux' or 'xue' 
+```
+
 ## 1.6 Higher-Order Functions
 
 > Functions that manipulate functions are called higher-order functions. This section shows how higher-order functions can serve as powerful abstraction mechanisms, vastly increasing the expressive power of our language.
