@@ -94,3 +94,49 @@ NameError: name 'b' is not defined
 > The fact that functions can only manipulate their local environment is critical to creating modular programs
 
 > The key to effective testing is to write (and run) tests immediately after implementing new functions. It is even good practice to write some tests before you implement, in order to have some example inputs and outputs in your mind. A test that applies a single function is called a unit test. Exhaustive unit testing is a hallmark of good program design.
+
+## 1.6 Higher-Order Functions
+
+> Functions that manipulate functions are called higher-order functions. This section shows how higher-order functions can serve as powerful abstraction mechanisms, vastly increasing the expressive power of our language.
+
+> Lexical scope. Locally defined functions also have access to the name bindings in the scope in which they are defined. In this example, sqrt_update refers to the name a, which is a formal parameter of its enclosing function sqrt. This discipline of sharing names among nested definitions is called lexical scoping. Critically, the inner functions have access to the names in the environment where they are defined (not where they are called).
+
+```
+1. Each user-defined function has a parent environment: the environment in which it was defined.
+2. When a user-defined function is called, its local frame extends its parent environment.
+```
+
+when a nested function was called, it means its parent already been called
+
+> The names of a local function do not interfere with names external to the function in which it is defined, because the local function name will be bound in the current local environment in which it was defined, rather than the global environment.
+> A local function can access the environment of the enclosing function, because the body of the local function is evaluated in an environment that extends the evaluation environment in which it was defined.
+
+> We can use higher-order functions to convert a function that takes multiple arguments into a chain of functions that each take a single argument. More specifically, given a function f(x, y), we can define a function g such that g(x)(y) is equivalent to f(x, y). Here, g is a higher-order function that takes in a single argument x and returns another function that takes in a single argument y. This transformation is called currying.
+
+### 1.6.6 currying
+
+```py
+def map_to_range(start, end, f):
+    while start < end:
+        print(f(start))
+        start = start + 1
+
+# currying
+def curry2(f):
+    def h(x):
+        def g(y):
+            return f(x, y)
+
+        return g
+
+    return h
+
+
+def curryTest(x, y):
+    print(x, y)
+
+currying = curry2(curryTest)
+currying(1)(2)
+```
+
+### 1.6.7 lambda expression
