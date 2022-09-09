@@ -2,7 +2,7 @@
 
 from dice import six_sided, make_test_dice
 from ucb import main, trace, interact
-from math import log2
+from math import log2, sqrt
 
 GOAL = 100  # The goal of Hog is to score 100 points.
 
@@ -23,6 +23,18 @@ def roll_dice(num_rolls, dice=six_sided):
     assert num_rolls > 0, 'Must roll at least once.'
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
+    total, k = 0, 1
+    sowSad = False
+    while k <= num_rolls:
+      roll = dice()
+      total, k = total + roll, k + 1
+      if roll == 1:
+        sowSad = True
+
+    if num_rolls > 1 and sowSad:
+      total = 1
+    
+    return total
     # END PROBLEM 1
 
 
@@ -34,6 +46,9 @@ def tail_points(opponent_score):
     """
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
+    ones = opponent_score % 10
+    tens = (opponent_score // 10) % 10
+    return abs(tens - ones) * 2 + 1
     # END PROBLEM 2
 
 
@@ -51,6 +66,14 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert num_rolls <= 10, 'Cannot roll more than 10 dice.'
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
+    score = 0
+
+    if num_rolls == 0:
+      score = tail_points(opponent_score)
+    else:
+      score = roll_dice(num_rolls, dice)
+    
+    return score
     # END PROBLEM 3
 
 
@@ -74,6 +97,16 @@ def square_update(num_rolls, player_score, opponent_score, dice=six_sided):
 
 # BEGIN PROBLEM 4
 "*** YOUR CODE HERE ***"
+def perfect_square(score):
+    """Return wheather the number of score is a perfect square
+    """
+    return sqrt(score) % 1 == 0
+
+def next_perfect_square(score):
+  """Returns the next perfect square
+  """
+  nextNumber = sqrt(score) + 1
+  return int(nextNumber * nextNumber)
 # END PROBLEM 4
 
 
@@ -113,6 +146,21 @@ def play(strategy0, strategy1, update,
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    num_rolls = 0
+    turn = 0
+    while score0 < goal and score1 < goal:
+        # player 0
+        num_rolls = strategy0(score0, score1)
+        score0 += update(num_rolls, score0, score1, dice)
+        who = 1 - who
+
+        # player 1
+        num_rolls = strategy1(score1, score0)
+        score1 += update(num_rolls, score1, score0, dice)
+        who = 1 - who
+
+        turn += 1
+
     # END PROBLEM 5
     return score0, score1
 
