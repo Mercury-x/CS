@@ -149,14 +149,15 @@ def play(strategy0, strategy1, update,
     num_rolls = 0
     turn = 0
     while score0 < goal and score1 < goal:
-        # player 0
-        num_rolls = strategy0(score0, score1)
-        score0 += update(num_rolls, score0, score1, dice)
-        who = 1 - who
-
-        # player 1
-        num_rolls = strategy1(score1, score0)
-        score1 += update(num_rolls, score1, score0, dice)
+        if who == 0:
+            # player 0
+            num_rolls = strategy0(score0, score1)
+            score0 = update(num_rolls, score0, score1, dice)
+        else:
+            # player 1
+            num_rolls = strategy1(score1, score0)
+            score1 = update(num_rolls, score1, score0, dice)
+        
         who = 1 - who
 
         turn += 1
