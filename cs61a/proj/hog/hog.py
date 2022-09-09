@@ -187,6 +187,7 @@ def always_roll(n):
     assert n >= 0 and n <= 10
     # BEGIN PROBLEM 6
     "*** YOUR CODE HERE ***"
+    return lambda x, y: n
     # END PROBLEM 6
 
 
@@ -217,6 +218,19 @@ def is_always_roll(strategy, goal=GOAL):
     """
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
+    player0, player1 = 0, 0
+    last_roll = strategy(0, 0)
+    while player0 < 100:
+        player1 = 0
+        while player1 < 100:
+            cur_roll = strategy(player0, player1)
+            if cur_roll != last_roll:
+                return False
+            last_roll = cur_roll
+            player1 += 1
+        player0 += 1
+    
+    return True
     # END PROBLEM 7
 
 

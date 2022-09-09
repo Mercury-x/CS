@@ -2,6 +2,7 @@
 # Optional: Adding a User Interface #
 #####################################
 
+from tkinter import W
 from hog import *
 
 ########################
@@ -131,3 +132,10 @@ def run(*args):
                         help='How many interactive players (0, 1, or 2)')
     args = parser.parse_args()
     play_with(args.num_players)
+
+"""
+# structure
+> args -> player number
+> play_with > use play_and_print wrapper function
+> printing in strategy
+"""
