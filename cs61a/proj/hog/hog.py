@@ -247,6 +247,14 @@ def make_averaged(original_function, total_samples=1000):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    def roll_average(*args):
+      total, k = 0, 0
+      while k < total_samples:
+        total, k = total + original_function(*args), k + 1
+      
+      return total / total_samples
+    
+    return roll_average
     # END PROBLEM 8
 
 
@@ -261,6 +269,15 @@ def max_scoring_num_rolls(dice=six_sided, total_samples=1000):
     """
     # BEGIN PROBLEM 9
     "*** YOUR CODE HERE ***"
+    k, max_roll_score, max_roll_index = 1, 0, 0
+    while k <= 10:
+      avg_roll = make_averaged(roll_dice, total_samples)
+      cur_roll_score = avg_roll(k, dice)
+      if cur_roll_score > max_roll_score:
+        max_roll_index, max_roll_score = k, cur_roll_score
+      k += 1
+
+    return max_roll_index
     # END PROBLEM 9
 
 
