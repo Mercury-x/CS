@@ -1,8 +1,8 @@
 """The Game of Hog."""
 
 from dice import six_sided, make_test_dice
-from ucb import main, trace, interact
-from math import log2, sqrt
+from ucb import main
+from math import sqrt
 
 GOAL = 100  # The goal of Hog is to score 100 points.
 
@@ -321,6 +321,9 @@ def tail_strategy(score, opponent_score, threshold=12, num_rolls=6):
     points, and returns NUM_ROLLS otherwise. Ignore score and Square Swine.
     """
     # BEGIN PROBLEM 10
+    roll_0 = tail_points(opponent_score)
+    if roll_0 >= threshold:
+      return 0
     return num_rolls  # Remove this line once implemented.
     # END PROBLEM 10
 
@@ -328,6 +331,16 @@ def tail_strategy(score, opponent_score, threshold=12, num_rolls=6):
 def square_strategy(score, opponent_score, threshold=12, num_rolls=6):
     """This strategy returns 0 dice when your score would increase by at least threshold."""
     # BEGIN PROBLEM 11
+    roll_0 = tail_points(opponent_score)
+    # perfect score
+    if perfect_square(score + roll_0):
+      next_score = next_perfect_square(score + roll_0)
+      if next_score > threshold:
+        return 0
+    # bigger than threshold, but not perfect score
+    if roll_0 > threshold:
+      return 0
+
     return num_rolls  # Remove this line once implemented.
     # END PROBLEM 11
 
