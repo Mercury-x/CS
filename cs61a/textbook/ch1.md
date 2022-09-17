@@ -194,3 +194,30 @@ result = square(12)
 print(result)
 ```
 >In this example, A higher-order function trace is defined, which returns a function that precedes a call to its argument with a print statement that outputs the argument. The def statement for triple has an annotation, @trace, which affects the execution rule for def. As usual, the function triple is created. However, the name triple is not bound to this function. Instead, the name triple is bound to the returned function value of calling trace on the newly defined triple function.
+
+## return
+
+```py
+def search(f):
+    x = 0
+    while not f(x):
+        x = x + 1
+    return x
+        
+        
+def inverse(f):
+    return lambda y: search(lambda x: f(x) == y)
+    
+sqrt = inverse(lambda x: x*x)
+print(sqrt(16))
+```
+
+## if & else
+ the reason why if and else control statement exist, instead of using function e.g. **if_(condition, c, t)**, that is because while calling a function, we will get the operand value and pass to function as argument, so it will be executed when we call the function.
+
+ ## errors
+
+ - syntax errors
+ - type errors
+   - runtine error
+ - ZeroDevisionError
