@@ -126,9 +126,9 @@ def div_by_primes_under(n):
     i = 2
     while i < n:
         if not checker(i):
-            checker = 
-        i = ____________________________
-    return ____________________________
+            checker = (lambda f, i: lambda x: x % i == 0 or f(x))(checker, i)
+        i = i + 1
+    return checker
 
 
 def div_by_primes_under_no_lambda(n):
@@ -167,11 +167,14 @@ def successor(n):
 def one(f):
     """Church numeral 1: same as successor(zero)"""
     "*** YOUR CODE HERE ***"
+    return lambda x: f(x)
 
 
 def two(f):
     """Church numeral 2: same as successor(successor(zero))"""
     "*** YOUR CODE HERE ***"
+    return lambda x: f(f(x))
+
 
 
 three = successor(two)
@@ -190,6 +193,8 @@ def church_to_int(n):
     3
     """
     "*** YOUR CODE HERE ***"
+    f = lambda x: x + 1
+    return n(f)(0)
 
 
 def add_church(m, n):
@@ -199,6 +204,7 @@ def add_church(m, n):
     5
     """
     "*** YOUR CODE HERE ***"
+    return lambda f: lambda x: m(f)(x) + n(f)(x)
 
 
 def mul_church(m, n):
@@ -211,6 +217,8 @@ def mul_church(m, n):
     12
     """
     "*** YOUR CODE HERE ***"
+    return lambda f: lambda x: m(f)(x) * n(f)(x)
+
 
 
 def pow_church(m, n):
@@ -222,3 +230,5 @@ def pow_church(m, n):
     9
     """
     "*** YOUR CODE HERE ***"
+    return lambda f: lambda x: m(f)(x) ** n(f)(x)
+
