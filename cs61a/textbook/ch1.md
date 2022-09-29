@@ -99,7 +99,6 @@ NameError: name 'b' is not defined
 
 My understanding about Boolean value. In the world of programing language, they have two types of Boolean value, one is False, and the other is True. In my understanding, I think each value correspond to a Boolean Value, whatever it's True or False.So, when we use short-circuiting, we will first check the corresponding boolean value, depends on different it's boolean value, it will return the corresponding expression.
 
-
 **Boolean operators return expression, not boolean value!**
 
 ```py
@@ -110,7 +109,7 @@ My understanding about Boolean value. In the world of programing language, they 
 >>> 0
 # when the first arg of the 'and' operator is true, the 'and' is totally depends on the second arg.So, it will return the second arg's expression
 # and, because we are not executing boolean operator in Boolean Context, python don't have to change its value to boolean.
->>> 'azoux' or 'xue' 
+>>> 'azoux' or 'xue'
 ```
 
 ## 1.6 Higher-Order Functions
@@ -168,13 +167,13 @@ currying(1)(2)
 ```
 
 ### 1.6.8 first-class functions
-~~~~
+
+```
 They may be bound to names.
 They may be passed as arguments to functions.
 They may be returned as the results of functions.
 They may be included in data structures.
-~~~~
-
+```
 
 ### 1.6.9 function decorator
 
@@ -183,17 +182,18 @@ def trace(fn):
     def wrapper(x):
         print(fn, '(', x, ')')
         return fn(x)
-    
+
     return wrapper
 
-@trace    
+@trace
 def square(x):
     return x * x
 
 result = square(12)
 print(result)
 ```
->In this example, A higher-order function trace is defined, which returns a function that precedes a call to its argument with a print statement that outputs the argument. The def statement for triple has an annotation, @trace, which affects the execution rule for def. As usual, the function triple is created. However, the name triple is not bound to this function. Instead, the name triple is bound to the returned function value of calling trace on the newly defined triple function.
+
+> In this example, A higher-order function trace is defined, which returns a function that precedes a call to its argument with a print statement that outputs the argument. The def statement for triple has an annotation, @trace, which affects the execution rule for def. As usual, the function triple is created. However, the name triple is not bound to this function. Instead, the name triple is bound to the returned function value of calling trace on the newly defined triple function.
 
 ## return
 
@@ -203,21 +203,43 @@ def search(f):
     while not f(x):
         x = x + 1
     return x
-        
-        
+
+
 def inverse(f):
     return lambda y: search(lambda x: f(x) == y)
-    
+
 sqrt = inverse(lambda x: x*x)
 print(sqrt(16))
 ```
 
 ## if & else
- the reason why if and else control statement exist, instead of using function e.g. **if_(condition, c, t)**, that is because while calling a function, we will get the operand value and pass to function as argument, so it will be executed when we call the function.
 
- ## errors
+the reason why if and else control statement exist, instead of using function e.g. **if\_(condition, c, t)**, that is because while calling a function, we will get the operand value and pass to function as argument, so it will be executed when we call the function.
 
- - syntax errors
- - type errors
-   - runtine error
- - ZeroDevisionError
+## errors
+
+- syntax errors
+- type errors
+  - runtine error
+- ZeroDevisionError
+
+## 1.7 recursion
+
+### 1.7.1 recursion
+
+> Recursive calls always have a certain character: they simplify the original problem.For each subsequent call, there is less work left to be done.
+
+> These two factorial functions differ conceptually. The iterative function constructs the result from the base case of 1 to the final total by successively multiplying in each term. The recursive function, on the other hand, constructs the result directly from the final term, n, and the result of the simpler problem, fact(n-1).
+
+> While we can unwind the recursion using our model of computation, it is often clearer to think about recursive calls as functional abstractions. That is, we should not care about how fact(n-1) is implemented in the body of fact; we should simply trust that it computes the factorial of n-1. Treating a recursive call as a functional abstraction has been called a recursive leap of faith. We define a function in terms of itself, but simply trust that the simpler cases will work correctly when verifying the correctness of the function. In this example, we trust that fact(n-1) will correctly compute (n-1)!; we must only check that n! is computed correctly if this assumption holds. In this way, verifying the correctness of a recursive function is a form of proof by induction.
+
+> learning to recognize the computational processes evolved by recursive functions certainly requires practice.
+
+# mutual recursion
+
+> When a recursive procedure is divided among two functions that call each other, the functions are said to be mutually recursive.
+
+### converting recursion to iteration
+
+- Iteration is a special example of iteration
+- Figure out what state must be mantained by the iterative function
