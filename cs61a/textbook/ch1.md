@@ -243,3 +243,20 @@ the reason why if and else control statement exist, instead of using function e.
 
 - Iteration is a special example of iteration
 - Figure out what state must be mantained by the iterative function
+
+### tree recursion
+
+> A function with multiple recursive calls is said to be tree recursive because each call branches into multiple smaller calls, each of which branches into yet smaller calls, just as the branches of a tree become smaller but more numerous as they extend from the trunk.
+
+```py
+def count_partitions(n, m):
+  """Count the ways to partition n using parts up to m."""
+  if n == 0:
+      return 1
+  elif n < 0:
+      return 0
+  elif m == 0:
+      return 0
+  else:
+      return count_partitions(n-m, m) + count_partitions(n, m-1)
+```
