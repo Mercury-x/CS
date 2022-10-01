@@ -1,6 +1,5 @@
 HW_SOURCE_FILE = __file__
 
-
 def num_eights(pos):
     """Returns the number of times 8 appears as a digit of pos.
 
@@ -25,6 +24,12 @@ def num_eights(pos):
     True
     """
     "*** YOUR CODE HERE ***"
+    if pos == 0:
+      return 0
+    if pos % 10 == 8:
+      return 1 + num_eights(pos // 10)
+    else:
+      return num_eights(pos // 10)
 
 
 def pingpong(n):
@@ -61,6 +66,22 @@ def pingpong(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    def helper(k):
+      if k <= 1:
+        return True
+      else:
+        if num_eights(k) or k % 8 == 0:
+          return not helper(k-1) 
+        else:
+          return helper(k-1)
+        
+    if n == 1:
+      return 1
+    else:
+      if helper(n-1):
+        return 1 + pingpong(n-1)
+      else:
+        return pingpong(n-1) - 1
 
 
 def next_larger_coin(coin):
@@ -98,7 +119,6 @@ def next_smaller_coin(coin):
     elif coin == 5:
         return 1
 
-
 def count_coins(change):
     """Return the number of ways to make change using coins of value of 1, 5, 10, 25.
     >>> count_coins(15)
@@ -116,7 +136,19 @@ def count_coins(change):
     >>> check(HW_SOURCE_FILE, 'count_coins', ['While', 'For'])
     True
     """
+
     "*** YOUR CODE HERE ***"
+    def partFunc(lowest, n):
+      if lowest == None:
+        return 0
+      if lowest == n:
+        return 1
+      if lowest > n:
+        return 0
+
+      return partFunc(next_larger_coin(lowest), n) + partFunc(lowest, n-lowest)
+
+    return partFunc(1, change)
 
 
 anonymous = False  # Change to True if you would like to remain anonymous on the final leaderboard.
