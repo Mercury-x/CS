@@ -20,6 +20,10 @@ def summation(n, term):
     """
     assert n >= 1
     "*** YOUR CODE HERE ***"
+    if n == 1:
+      return term(n)
+    else:
+      return summation(n-1, term) + term(n)
 
 
 def pascal(row, column):
@@ -35,6 +39,12 @@ def pascal(row, column):
     6
     """
     "*** YOUR CODE HERE ***"
+    if column == 0 or row == column:
+      return 1
+    elif column > row:
+      return 0
+    else:
+      return pascal(row-1, column-1) + pascal(row-1, column)
 
 
 def paths(m, n):
@@ -51,6 +61,15 @@ def paths(m, n):
     1
     """
     "*** YOUR CODE HERE ***"
+    # for each grid, we only need consider two condisions
+    # how many kinds options to access the left and bottom grid
+    # and return the sum of that two
+    if m < 1 or n < 1:
+      return 0
+    elif m == 1 and n == 1:
+      return 1
+    else:
+      return paths(m-1, n) + paths(m, n-1)
 
 
 def couple(s, t):
@@ -67,6 +86,9 @@ def couple(s, t):
     """
     assert len(s) == len(t)
     "*** YOUR CODE HERE ***"
+    list_len = len(s)
+    s = s + t
+    return [[s[i], s[i+list_len]] for i in range(list_len)]
 
 
 def double_eights(n):
