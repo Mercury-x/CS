@@ -113,6 +113,17 @@ def double_eights(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    def helper(n, prev):
+      if n == 0:
+        return False
+      elif n % 10 == 8 and prev:
+        return True
+      elif n % 10 == 8:
+        return helper(n // 10, True)
+      else:
+        return helper(n // 10, False)
+    
+    return helper(n, False)
 
 
 def coords(fn, seq, lower, upper):
@@ -123,7 +134,7 @@ def coords(fn, seq, lower, upper):
     [[-2, 4], [1, 1], [3, 9]]
     """
     "*** YOUR CODE HERE ***"
-    return ______
+    return [[x, fn(x)] for x in seq if fn(x) >= lower and fn(x) <= upper ]
 
 
 def riffle(deck):
@@ -136,4 +147,4 @@ def riffle(deck):
     [0, 10, 1, 11, 2, 12, 3, 13, 4, 14, 5, 15, 6, 16, 7, 17, 8, 18, 9, 19]
     """
     "*** YOUR CODE HERE ***"
-    return _______
+    return [ deck[(i % 2) * len(deck) // 2 + i // 2] for i in range(len(deck))]
