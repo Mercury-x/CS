@@ -31,6 +31,10 @@ def pick(paragraphs, select, k):
     """
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
+    sub_paragraphs = [p for p in paragraphs if select(p)]
+    if k >= len(sub_paragraphs):
+      return ''
+    return sub_paragraphs[k]
     # END PROBLEM 1
 
 
@@ -49,7 +53,14 @@ def about(topic):
     """
     assert all([lower(x) == x for x in topic]), 'topics should be lowercase.'
     # BEGIN PROBLEM 2
-    "*** YOUR CODE HERE ***"
+    def includeTopic(p):
+      p = split(remove_punctuation(lower(p)))
+      for t in topic:
+        if t in p:
+          return True
+      return False
+    
+    return includeTopic
     # END PROBLEM 2
 
 
@@ -79,7 +90,18 @@ def accuracy(typed, source):
     typed_words = split(typed)
     source_words = split(source)
     # BEGIN PROBLEM 3
-    "*** YOUR CODE HERE ***"
+    accurate = 0
+    for i in range(len(typed_words)):
+      if i == len(source_words):
+        break
+      else:
+        if typed_words[i] == source_words[i]:
+          accurate = accurate + 1
+    if accurate:
+      return accurate / len(typed_words) * 100
+    if len(typed_words) == 0 and len(source_words) == 0:
+      return 100.0
+    return 0.0
     # END PROBLEM 3
 
 
@@ -97,7 +119,7 @@ def wpm(typed, elapsed):
     """
     assert elapsed > 0, 'Elapsed time must be positive'
     # BEGIN PROBLEM 4
-    "*** YOUR CODE HERE ***"
+    return len(typed) * 60 / elapsed / 5
     # END PROBLEM 4
 
 
@@ -124,7 +146,11 @@ def autocorrect(typed_word, word_list, diff_function, limit):
     'testing'
     """
     # BEGIN PROBLEM 5
-    "*** YOUR CODE HERE ***"
+    if typed_word in word_list:
+      return typed_word
+    diff_list = [w for w in word_list if diff_function(typed_word, w, limit) <= limit]
+    diff_limit_list = [diff_function(typed_word, w, limit) for w in diff_list]
+    
     # END PROBLEM 5
 
 
