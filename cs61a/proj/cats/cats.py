@@ -150,7 +150,13 @@ def autocorrect(typed_word, word_list, diff_function, limit):
       return typed_word
     diff_list = [w for w in word_list if diff_function(typed_word, w, limit) <= limit]
     diff_limit_list = [diff_function(typed_word, w, limit) for w in diff_list]
-    
+    if len(diff_limit_list) == 0:
+      return typed_word
+    min_index = 0
+    for i in range(len(diff_list)):
+      if diff_limit_list[min_index] > diff_limit_list[i]:
+        min_index = i
+    return diff_list[min_index]
     # END PROBLEM 5
 
 
@@ -177,7 +183,19 @@ def feline_fixes(typed, source, limit):
     5
     """
     # BEGIN PROBLEM 6
-    assert False, 'Remove this line'
+    def helper(typed, source, index, limited):
+      if limited > limit:
+        return limited
+      if index >= len(typed) and index >= len(source):
+        return limited
+      if index >= len(typed) or index >= len(source):
+        return helper(typed, source, index + 1, limited + 1)
+      if typed[index] == source[index]:
+        return helper(typed, source, index + 1, limited)
+      else:
+        return helper(typed, source, index + 1, limited + 1)
+
+    return helper(typed, source, 0, 0)
     # END PROBLEM 6
 
 
@@ -196,23 +214,21 @@ def minimum_mewtations(start, goal, limit):
     >>> minimum_mewtations("ckiteus", "kittens", big_limit) # ckiteus -> kiteus -> kitteus -> kittens
     3
     """
-    assert False, 'Remove this line'
-    if ______________:  # Fill in the condition
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
-    elif ___________:  # Feel free to remove or add additional cases
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
-    else:
-        add = ...  # Fill in these lines
-        remove = ...
-        substitute = ...
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
-
+    def helper(start, goal, limited):
+      if limited > limit:
+        return limited
+      if start == goal:
+          return limited
+      elif start == '' or goal == '':
+          return max(len(start), len(goal)) + limited
+      else:
+          if len(start) > 0 and len(goal) > 0 and start[0] == goal[0]:
+            return helper(start[1:], goal[1:], limited)
+          add = helper(start, goal[1:], limited + 1)
+          remove = helper(start[1:], goal, limited + 1)
+          substitute = helper(start[1:], goal[1:], limited + 1)
+          return min(add, remove, substitute)
+    return helper(start, goal, 0)
 
 def final_diff(typed, source, limit):
     """A diff function that takes in a string TYPED, a string SOURCE, and a number LIMIT.
