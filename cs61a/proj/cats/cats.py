@@ -268,7 +268,17 @@ def report_progress(typed, prompt, user_id, upload):
     0.2
     """
     # BEGIN PROBLEM 8
-    "*** YOUR CODE HERE ***"
+    accurate = 0
+    for i in range(len(typed)):
+      if i < len(prompt) and typed[i] == prompt[i]:
+        accurate = accurate + 1
+      else:
+        break
+    upload({
+      'id': user_id,
+      'progress': accurate / len(prompt)
+    })
+    return accurate / len(prompt)
     # END PROBLEM 8
 
 
@@ -289,9 +299,15 @@ def time_per_word(words, times_per_player):
     >>> match["times"]
     [[6, 3, 6, 2], [10, 6, 1, 2]]
     """
-    # BEGIN PROBLEM 9
-    "*** YOUR CODE HERE ***"
-    # END PROBLEM 9
+    match_dict = {
+      'words': [word for word in words],
+      'times': [[] for x in times_per_player]
+    }
+    k = 0
+    for player in times_per_player:
+      match_dict['times'][k] = [player[i] - player[i-1] for i in range(1, len(player))]
+      k += 1
+    return match(match_dict['words'], match_dict['times'])
 
 
 def fastest_words(match):
@@ -309,12 +325,18 @@ def fastest_words(match):
     >>> p1
     [4, 1, 6]
     """
-    player_indices = range(len(get_all_times(match)))  # contains an *index* for each player
-    word_indices = range(len(get_all_words(match)))    # contains an *index* for each word
-    # BEGIN PROBLEM 10
-    "*** YOUR CODE HERE ***"
-    # END PROBLEM 10
-
+    player_times = get_all_times(match)  # contains an *index* for each player
+    words = get_all_words(match)    # contains an *index* for each word
+    fastest_list = [[] for x in player_times]
+    for i in range(len(words)):
+      min_index = 0
+      min_time = player_times[0][i]
+      for j in range(len(player_times)):
+        if player_times[j][i] < min_time:
+          min_time = player_times[j][i]
+          min_index = j
+      fastest_list[min_index].append(words[i])
+    return fastest_list
 
 def match(words, times):
     """A dictionary containing all words typed and their times.
