@@ -15,7 +15,10 @@ def flatten(s):
     [[1, [1, 1]], 1, [1, 1]]
     """
     "*** YOUR CODE HERE ***"
-
+    if type(s) == list:
+      return sum([flatten(lst) for lst in s], [])
+    else:
+      return [s]
 
 from math import sqrt
 
@@ -32,6 +35,7 @@ def distance(city_a, city_b):
     5.0
     """
     "*** YOUR CODE HERE ***"
+    return sqrt((get_lat(city_a) - get_lat(city_b)) ** 2 + (get_lon(city_a) - get_lon(city_b)) ** 2)
 
 
 def closer_city(lat, lon, city_a, city_b):
@@ -50,6 +54,10 @@ def closer_city(lat, lon, city_a, city_b):
     'Bucharest'
     """
     "*** YOUR CODE HERE ***"
+    city_use = make_city('use', lat, lon)
+    if distance(city_use, city_a) < distance(city_use, city_b):
+      return get_name(city_a)
+    return get_name(city_b)
 
 
 def check_city_abstraction():
@@ -151,6 +159,12 @@ def berry_finder(t):
     True
     """
     "*** YOUR CODE HERE ***"
+    if label(t) == 'berry':
+      return True
+    if is_tree(t):
+      return True in [berry_finder(node) for node in branches(t)]
+    else:
+      return False
 
 
 def sprout_leaves(t, leaves):
@@ -187,6 +201,11 @@ def sprout_leaves(t, leaves):
           2
     """
     "*** YOUR CODE HERE ***"
+    if not is_leaf(t):
+      return tree(label(t), [sprout_leaves(b, leaves) for b in branches(t)])
+    else:
+      return tree(label(t), [tree(node) for node in leaves])
+
 
 # Abstraction tests for sprout_leaves and berry_finder
 
