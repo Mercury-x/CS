@@ -269,6 +269,9 @@ def preorder(t):
     [2, 4, 6]
     """
     "*** YOUR CODE HERE ***"
+    if not is_leaf(t):
+      return [label(t)] + sum([preorder(b) for b in branches(t)], [])
+    return [label(t)]
 
 
 def add_trees(t1, t2):
@@ -307,7 +310,25 @@ def add_trees(t1, t2):
       5
     """
     "*** YOUR CODE HERE ***"
-
+    if is_tree(t1) and is_tree(t2):
+      add_label = label(t1) + label(t2)
+      if is_leaf(t1) and is_leaf(t2):
+        return tree(add_label)
+      t1_branches = branches(t1)
+      t2_branches = branches(t2)
+      add_branches = []
+      for i in range(max(len(t1_branches), len(t2_branches))):
+        if i < len(t1_branches) and i < len(t2_branches):
+          add_branches.append(add_trees(t1_branches[i], t2_branches[i]))
+        elif i < len(t1_branches):
+          add_branches.append(add_trees(t1_branches[i], -1))
+        else:
+          add_branches.append(add_trees(-1, t2_branches[i]))
+      return tree(add_label, add_branches)
+    if is_tree(t1):
+      return t1
+    if is_tree(t2):
+      return t2
 
 def change_abstraction(change):
     """
