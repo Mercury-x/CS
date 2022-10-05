@@ -11,6 +11,21 @@
   - There are expressions that evaluate to values of native types, called literals.
   - There are built-in functions and operators to manipulate values of native types.
 
+## 2.2 Data Abstraction
+
+> The general technique of isolating the parts of a program that deal with how data are represented from the parts that deal with how data are manipulated is a powerful design methodology called data abstraction.
+
+> The basic idea of data abstraction is to structure programs so that they operate on abstract data. That is, our programs should use data in such a way as to make as few assumptions about the data as possible. At the same time, a concrete data representation is defined as an independent part of the program.
+
+> The basic idea of data abstraction is to structure programs so that they operate on abstract data. That is, our programs should use data in such a way as to make as few assumptions about the data as possible. At the same time, a concrete data representation is defined as an independent part of the program.
+
+when we do an data abstraction, we should operate the compound value, instead of violating the abstraction barrier. And we should not assume how the data represented.
+
+> Abstraction barriers make programs easier to maintain and to modify. The fewer functions that depend on a particular representation, the fewer changes are required when one wants to change that representation.
+
+> The implementation details below an abstraction barrier may change, but if the behavior does not, then the data abstraction remains valid, and any program written using this data abstraction will remain correct.
+
+> You can recognize data abstraction by its behavior.
 ## 2.3 Sequences
 
 - A sequence is an ordered collection of values.
