@@ -65,12 +65,14 @@ def planet(mass):
     """Construct a planet of some mass."""
     assert mass > 0
     "*** YOUR CODE HERE ***"
+    return ['planet', mass]
 
 
 def mass(w):
     """Select the mass of a planet."""
     assert is_planet(w), 'must call mass on a planet'
     "*** YOUR CODE HERE ***"
+    return w[1]
 
 
 def is_planet(w):
@@ -131,6 +133,21 @@ def balanced(m):
     True
     """
     "*** YOUR CODE HERE ***"
+    def mobile_balanced(m):
+      left_arm = left(m)
+      right_arm = right(m)
+      return length(left_arm) * total_weight(end(left_arm)) == length(right_arm) * total_weight(end(right_arm))
+
+    if is_mobile(m):
+      return mobile_balanced(m) and balanced(left(m)) and balanced(right(m))
+    if is_arm(m):
+      end_arm = end(m)
+      if is_planet(end_arm):
+        return True
+      if is_mobile(end_arm):
+        return balanced(end_arm)
+    # 我觉得比较重要的一点就是，我们需要搞清楚，这个回调函数需要返回什么，而不是杂糅在一起
+
 
 
 def totals_tree(m):
@@ -163,6 +180,15 @@ def totals_tree(m):
     True
     """
     "*** YOUR CODE HERE ***"
+    if is_mobile(m):
+      node = total_weight(m)
+      return tree(node, [totals_tree(left(m)), totals_tree(right(m))])
+    if is_arm(m):
+      end_arm = end(m)
+      if is_planet(end_arm):
+        return tree(total_weight(end_arm))
+      if is_mobile(end_arm):
+        return totals_tree(end_arm)
 
 
 def replace_loki_at_leaf(t, lokis_replacement):
@@ -195,6 +221,13 @@ def replace_loki_at_leaf(t, lokis_replacement):
     True
     """
     "*** YOUR CODE HERE ***"
+    node_label = label(t)
+    if node_label == 'loki' and is_leaf(t):
+      node_label = lokis_replacement
+    if is_leaf(t):
+      return tree(node_label)
+    else:
+      return tree(node_label, [replace_loki_at_leaf(b, lokis_replacement) for b in branches(t)])
 
 
 def has_path(t, word):
@@ -229,6 +262,14 @@ def has_path(t, word):
     """
     assert len(word) > 0, 'no path for empty word.'
     "*** YOUR CODE HERE ***"
+    if label(t) == word[0]:
+      if len(word) == 1:
+        return True
+      sub_trees = branches(t)
+      for b in sub_trees:
+        if has_path(b, word[1:]):
+          return True
+    return False
 
 
 def str_interval(x):
