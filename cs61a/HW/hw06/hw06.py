@@ -176,11 +176,15 @@ class VirFib():
     VirFib object, value 8
     """
 
-    def __init__(self, value=0):
+    def __init__(self, value=0, prev=1):
         self.value = value
+        self.prev = prev
 
     def next(self):
         "*** YOUR CODE HERE ***"
+        vir_fib = VirFib(self.value, self.prev)
+        vir_fib.prev, vir_fib.value = vir_fib.value, vir_fib.value + vir_fib.prev
+        return vir_fib
 
     def __repr__(self):
         return "VirFib object, value " + str(self.value)
@@ -212,6 +216,53 @@ def is_bst(t):
     False
     """
     "*** YOUR CODE HERE ***"
+    lst = []
+    not_valid = False
+    def travel(t):
+        print("DEBUG", t.label)
+        if t.is_leaf():
+            lst.append(t.label)
+        else:
+
+            print("DEBUG", "children = ", len(t.branches))
+            if len(t.branches) == 2:
+                travel(t.branches[0])
+                lst.append(t.label)
+                travel(t.branches[1])
+            elif len(t.branches) == 1:
+                if t.branches[0].label <= t.label:
+                    travel(t.branches[0])
+                lst.append(t.label)
+                if t.branches[0].label > t.label:
+                    travel(t.branches[0])
+
+            else:
+                nonlocal not_valid
+                not_valid = True
+
+    travel(t)
+    print("DEBUG", lst)
+    for i in range(1, len(lst)):
+        if lst[i-1] > lst[i]:
+            return False
+    return True and not not_valid
+
+
+
+def bst_min(children):
+    assert len(children) == 2, 'must have two children'
+    if children[0].label < children[1].label:
+        return children[0]
+    else:
+        return children[1]
+
+
+def bst_max(children):
+    assert len(children) == 2, 'must have two children'
+    if children[0].label < children[1].label:
+        return children[1]
+    else:
+        return children[0]
 
 
 class Link:
