@@ -77,6 +77,14 @@ def num_trees(n):
 
     """
     "*** YOUR CODE HERE ***"
+    if n <= 2:
+        return 1
+    else:
+        total = 0
+        for i in range(1, n):
+            total += num_trees(i) * num_trees(n-i)
+        return total
+
 
 
 def partition_gen(n):
